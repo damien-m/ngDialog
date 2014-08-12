@@ -23,7 +23,8 @@
 			showClose: true,
 			closeByDocument: true,
 			closeByEscape: true,
-			appendTo: false
+			appendTo: false,
+			customStyles: false
 		};
 
 		this.setForceBodyReload = function (_useIt) {
@@ -83,7 +84,7 @@
 							dialogsCount -= 1;
 						}
 
-						if (animationEndSupport) {
+						if (animationEndSupport && !customStyles) {
 							$dialog.unbind(animationEndEvent).bind(animationEndEvent, function () {
 								$dialog.scope().$destroy();
 								$dialog.remove();
