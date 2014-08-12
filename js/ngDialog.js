@@ -15,6 +15,7 @@
 	var animationEndSupport = isDef(style.animation) || isDef(style.WebkitAnimation) || isDef(style.MozAnimation) || isDef(style.MsAnimation) || isDef(style.OAnimation);
 	var animationEndEvent = 'animationend webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend';
 	var forceBodyReload = false;
+	var options = {};
 
 	module.provider('ngDialog', function () {
 		var defaults = this.defaults = {
@@ -29,10 +30,6 @@
 
 		this.setForceBodyReload = function (_useIt) {
 			forceBodyReload = _useIt || false;
-		};
-
-		this.setDefaults = function (newDefaults) {
-			angular.extend(defaults, newDefaults);
 		};
 
 		var globalID = 0, dialogsCount = 0, closeByDocumentHandler, defers = {};
@@ -84,7 +81,7 @@
 							dialogsCount -= 1;
 						}
 
-						if (animationEndSupport && !customStyles) {
+						if (animationEndSupport && !options.customStyles) {
 							$dialog.unbind(animationEndEvent).bind(animationEndEvent, function () {
 								$dialog.scope().$destroy();
 								$dialog.remove();
@@ -132,7 +129,7 @@
 					 */
 					open: function (opts) {
 						var self = this;
-						var options = angular.copy(defaults);
+						options = angular.copy(defaults);
 
 						opts = opts || {};
 						angular.extend(options, opts);
